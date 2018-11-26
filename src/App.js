@@ -1,25 +1,42 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { PureComponent } from 'react';
 import './App.css';
+import Button from './Button'
+import Input from './Input'
 
-class App extends Component {
-  render() {
+class App extends PureComponent {
+	constructor (props) {
+		super(props)
+    this.state = {
+		  count: [0],
+      name: 'text'
+    }
+    this.incrementCounter = this.incrementCounter.bind(this)
+    this.changeName = this.changeName.bind(this)
+	}
+
+	incrementCounter() {
+		this.setState({
+			count: [...this.state.count, this.state.count.length]
+		})
+  }
+	changeName(name) {
+		this.setState({
+			name: name
+		})
+  }
+
+	render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <Button
+          count={ this.state.count }
+          inc={ this.incrementCounter }
+          name={ this.state.name }
+        />
+        { this.state.count && <Input
+          name={ this.state.name }
+          changeName={ this.changeName }
+        /> }
       </div>
     );
   }
